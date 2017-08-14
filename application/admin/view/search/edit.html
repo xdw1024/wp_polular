@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <link rel="stylesheet" href="__PUBLIC_STATIC__css/main.css" />
+    <script src="__PUBLIC_STATIC__js/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC_STATIC__ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC_STATIC__Vkeyboard/vk_loader.js?vk_layout=CN%20Chinese%20Simpl.%20Pinyin&vk_skin=flat_gray" ></script>
+    <script>
+        function test(temp,id){
+            VirtualKeyboard.toggle(temp, id);
+            $("#kb_langselector,#kb_mappingselector,#copyrights").css("display", "none");
+        }
+    </script>
+    <style>
+        #title{
+            width: 400px;
+            height: 30px;
+            margin-top: 10px;
+        }
+        #content{
+            width: 44px;
+            height: 34px;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <form action="__ADMIN__Search/insertcontent" method="post">
+        <div class="content" id="contentarea">
+            <p>
+                标题：<input type="text" onblur="test('title','softkey');" onfocus="VirtualKeyboard.toggle('title','softkey');" id="title" name="title"   class="form-control usernum" placeholder="请输入标题"/>
+                <div id="softkey"></div>
+            </p>
+            <p>
+                <label>所属内容类型：</label>
+                <select class="combox" style="height: 30px;" name="type_id">
+                    <option value="" >请选择类型</option>
+                    {volist name="type" id="type" key="k"}
+                        <option value="{$type.id}" >{$type.name}</option>
+                    {/volist}
+                </select>
+            </p>
+            内容：<textarea id="content" onblur="test('content','softkey2');" onfocus="VirtualKeyboard.toggle('content','softkey2');"  name="content"></textarea>
+            <script type="text/javascript">
+                CKEDITOR.replace('content');
+            </script>
+            <div id="softkey2"></div>
+        </div>
+        <div class="re">
+            <input class="button" type="button" style="float: right; height: 40px;margin-left: 10px;" id="getback" onclick="javascript :history.back(-1);" value="返回">
+            <input class="button" type="submit" style="float: right; height: 40px;margin-left: 10px;" id="btn" value="保存">
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="always" name="referrer">
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC_STATIC__fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="__PUBLIC_STATIC__css/login.css" />
+</head>
+<body>
+<div class="bg_cover_outside">
+    <div class="bg_cover"></div>
+</div>
+<div class="login-modal">
+    <div class="logo_box">
+        <img src="__PUBLIC_STATIC__Images/login/logo.png" />
+    </div>
+    <p class="title">食品药品安全科普知识查询系统</p>
+    <div class="login_form">
+        <form id="loginForm" method="post" action="__ROUTE__admin/Auth/checkLogin/">
+            <div class="input-box">
+                <span class="input-tips"><i class="fa fa-user"></i></span>
+                <input type="text" id="account" name="account"  class="form-control usernum" placeholder="请输入账号"/>
+            </div>
+            <div class="input-box">
+                <span class="input-tips"><i class="fa fa-lock"></i></span>
+                <input type="password" id="password" name="password"  class="form-control "  placeholder="请输入密码"/>
+            </div>
+            <div class="input-box captcha">
+                <span class="input-tips"><i class="fa fa-unlock-alt"></i></span>
+                <input type="text" id="verify" name="verify" class="form-control"  placeholder="请输入验证码"/>
+                <div class="img-box"><img id="verifyImg" src="__ROUTE__admin/Auth/verify/" onClick="fleshVerify()"></div>
+            </div>
+            <p class="tip" style="font-size:16px;text-align: center; color:red; display: none;">提示：密码不正确！</p>
+            <a href="javascript:void(0)" onclick="DoSave()" class="submit">登录</a>
+            <!--<a href="javascript:document.getElementById('loginForm').submit();" onclick="DoSave()" class="submit" >登录</a>-->
+        </form>
+    </div>
+</div>
+<script src="__PUBLIC_STATIC__js/jquery-1.11.3.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.logo_box img').animate(
+                {
+                    marginTop : '0px',
+                    opacity : 1,
+                    filter : "alpha(opacity=" + 100 + ")"
+                }, 1000);
+
+        $('.title').animate(
+                {
+                    marginTop : '10px',
+                    opacity : 1,
+                    filter : "alpha(opacity=" + 100 + ")"
+                }, 1500);
+
+        $('.usernum').focus();
+    })
+
+    function fleshVerify(type){
+        //重载验证码
+        var timenow = new Date().getTime();
+        if (type){
+            $('#verifyImg').attr("src", '__ROUTE__admin/Auth/verify/adv/1/'+timenow);
+        }else{
+            $('#verifyImg').attr("src", '__ROUTE__admin/Auth/verify/'+timenow);
+        }
+    }
+
+    function checkForm(){
+        var account = document.getElementById('account')
+        var password = document.getElementById('password');
+        if((document.getElementById('account').value.length==0) && (document.getElementById('password').value.length==0)){
+            showError('#loginForm','帐号、密码不能为空');
+            //alert("帐号、密码不能为空");
+            return false;
+        }
+        else if((document.getElementById('password').value.length != 0) && (document.getElementById('account').value.length == 0)){
+            showError('#loginForm','帐号不能为空');
+            //alert("帐号不能为空");
+            return false;
+        }
+        else if((document.getElementById('password').value.length==0) && (document.getElementById('account').value.length != 0)){
+            showError('#loginForm','密码不能为空')
+            //alert("密码不能为空");
+            return false;
+        }
+        if(document.getElementById('verify').value.length == 0){
+            showError('#loginForm','验证码不能为空')
+            //alert("验证码不能为空");
+            return false;
+        }
+        return true;
+    }
+    function DoSave(){
+        if(checkForm()){
+            window.location =  "javascript:document.getElementById('loginForm').submit();";
+            //document.form.action =  "<%=indexfilename%>";
+            //document.form.submit();
+        }
+    }
+    function showError(form, text){
+        $(form).find('.tip').text(text).show(200);
+    }
+    //回车提交表单
+    document.onkeydown = function(e){
+        var ev = document.all ? window.event : e;
+        if(ev.keyCode==13) {
+            DoSave();
+            //$("#loginForm").submit();//处理事件
+        }
+    }
+
+</script>
+</body>
+</html>

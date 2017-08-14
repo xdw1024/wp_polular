@@ -1,0 +1,20 @@
+<div class="pageContent">
+    <form method="post" action="__ADMIN__Type/saveinfo" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);" >
+        <div class="pageFormContent" layoutH="56">
+            <input type="hidden" id="id" name="id" value="{$info.id}">
+            <input type="hidden" name="old_name" value="{$info.name}">
+            <p>
+                <label>单位类型：</label>
+                <input name="name" class="required" type="text" size="30" value="{$info.name}" alt="请输入内容类型" />
+            </p>
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+                <li>
+                    <div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>

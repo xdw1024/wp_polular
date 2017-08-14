@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="always" name="referrer">
+    <title>
+        文章
+    </title>
+    <link rel="stylesheet" href="__PUBLIC_STATIC__css/bootstrap.css" />
+    <link rel="stylesheet" href="__PUBLIC_STATIC__css/common.css" />
+</head>
+<body>
+<div class="main">
+    <div class="title">
+        <p class="info"> {$content.title}</p>
+    </div>
+    <div class="article-container">
+        {$content.content}
+    </div>
+    <div class="back-box"><button class="btn btn-default back" onclick="javascript :history.back(-1);"><img src="__PUBLIC_STATIC__Images/返回 (2).png" width="20px" style="display: block;float: left;margin-top: 3px;"/>&nbsp;返回</button></div>
+    <a href="#" class="scroll_btn" id="up"><img src="__PUBLIC_STATIC__Images/up.png"></a>
+    <a href="#" class="scroll_btn" id="down" ><img src="__PUBLIC_STATIC__Images/down.png"></a>
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC_STATIC__js/jquery-1.11.3.min.js"></script>
+<script>
+    $(document).ready(function(){
+        function resizehtml() {
+            var clientheight = document.body.clientHeight;
+            var mainpadtop = $('.title').height()+50;
+            var articlelistheight = clientheight - 100 -$('.title').height();
+            $('.main').css({'min-height':clientheight,'padding-top':mainpadtop});
+            $('.article-container').css({'max-height':articlelistheight,'height':articlelistheight});
+        }
+        resizehtml();
+        window.onresize = function(){
+            resizehtml();
+        }
+        $("#down").click(function() {
+            var t = $('.article-container').scrollTop();
+            $('.article-container').animate({'scrollTop':t+200},200);
+        });
+        $("#up").click(function() {
+            var t = $('.article-container').scrollTop();
+            $('.article-container').animate({'scrollTop':t-200},200);
+        });
+    })
+</script>
+</html>
